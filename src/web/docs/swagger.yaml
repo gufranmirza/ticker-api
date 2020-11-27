@@ -1,0 +1,105 @@
+basePath: /ticker-api/v1
+definitions:
+  errorinterface.ErrorResponse:
+    properties:
+      code:
+        description: application-specific error code
+        type: integer
+      error:
+        description: application-level error message, for debugging
+        type: string
+      status:
+        description: user-level status message
+        type: string
+    type: object
+  healthinterface.Health:
+    properties:
+      inboundInterfaces:
+        items:
+          $ref: '#/definitions/healthinterface.InboundInterface'
+        type: array
+      outboundInterfaces:
+        items:
+          $ref: '#/definitions/healthinterface.OutboundInterface'
+        type: array
+      serviceName:
+        type: string
+      serviceProvider:
+        type: string
+      serviceStartTimeUTC:
+        type: string
+      serviceStatus:
+        type: string
+      serviceVersion:
+        type: string
+      timeStampUTC:
+        type: string
+      uptime:
+        type: number
+    type: object
+  healthinterface.InboundInterface:
+    properties:
+      address:
+        type: string
+      applicationName:
+        type: string
+      connectionStatus:
+        type: string
+      hostname:
+        type: string
+      os:
+        type: string
+      timeStampUTC:
+        type: string
+    type: object
+  healthinterface.OutboundInterface:
+    properties:
+      applicationName:
+        type: string
+      connectionStatus:
+        type: string
+      timeStampUTC:
+        type: string
+      urls:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:8001
+info:
+  contact: {}
+  description: Ticker API Documentation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Ticker API Documentation
+  version: "2.0"
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: It returns the health of the service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/healthinterface.Health'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+      summary: Get health of the service
+      tags:
+      - health
+swagger: "2.0"

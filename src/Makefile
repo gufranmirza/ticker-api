@@ -31,3 +31,7 @@ migrate-down:
 
 migrate-new:
 	../bin/${BINARY_NAME} migrate new "new migration script"
+
+api-docs:
+	export PATH=$(go env GOPATH)/bin:$PATH
+	swag init --output=./web/docs

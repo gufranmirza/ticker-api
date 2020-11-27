@@ -1,0 +1,158 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Ticker API Documentation",
+        "title": "Ticker API Documentation",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "2.0"
+    },
+    "host": "localhost:8001",
+    "basePath": "/ticker-api/v1",
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "It returns the health of the service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Get health of the service",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/healthinterface.Health"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "errorinterface.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "application-specific error code",
+                    "type": "integer"
+                },
+                "error": {
+                    "description": "application-level error message, for debugging",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "user-level status message",
+                    "type": "string"
+                }
+            }
+        },
+        "healthinterface.Health": {
+            "type": "object",
+            "properties": {
+                "inboundInterfaces": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/healthinterface.InboundInterface"
+                    }
+                },
+                "outboundInterfaces": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/healthinterface.OutboundInterface"
+                    }
+                },
+                "serviceName": {
+                    "type": "string"
+                },
+                "serviceProvider": {
+                    "type": "string"
+                },
+                "serviceStartTimeUTC": {
+                    "type": "string"
+                },
+                "serviceStatus": {
+                    "type": "string"
+                },
+                "serviceVersion": {
+                    "type": "string"
+                },
+                "timeStampUTC": {
+                    "type": "string"
+                },
+                "uptime": {
+                    "type": "number"
+                }
+            }
+        },
+        "healthinterface.InboundInterface": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "applicationName": {
+                    "type": "string"
+                },
+                "connectionStatus": {
+                    "type": "string"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "timeStampUTC": {
+                    "type": "string"
+                }
+            }
+        },
+        "healthinterface.OutboundInterface": {
+            "type": "object",
+            "properties": {
+                "applicationName": {
+                    "type": "string"
+                },
+                "connectionStatus": {
+                    "type": "string"
+                },
+                "timeStampUTC": {
+                    "type": "string"
+                },
+                "urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

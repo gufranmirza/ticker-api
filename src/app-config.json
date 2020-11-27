@@ -3,7 +3,23 @@
     "service_provider": "Ticker Tech",
     "service_version": "v1.0.0",
     "service_started_timestamp_utc": "0001-01-01T00:00:00Z",
-
+    "host": {
+        "address": "127.0.0.1",
+        "port": 8001,
+        "enable_cors": true
+    },
+    "web": {
+        "api_version_v1": "/v1",
+        "url_prefix": "/ticker-api",
+        "allowed_origins": ["*"],
+        "allowed_methods":   ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allowed_headers":   ["Accept", "Authorization", "Content-Type", "X-CSRF-Token"],
+        "exposed_headers":   ["Link"],
+        "allow_credentials": true,
+        "max_age":           86400,
+        "request_timeout_in_sec": 60,
+        "show_api_docs": true
+    },
     "db": {
         "host": "mongodb://localhost:27017",
         "database": "ticker_api",
