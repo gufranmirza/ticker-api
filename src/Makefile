@@ -24,13 +24,13 @@ start:
 
 
 migrate-up:
-	../bin/${BINARY_NAME} migrate up 
+	../bin/${BINARY_NAME} migrate --action=up 
 
 migrate-down:
-	../bin/${BINARY_NAME} migrate down
+	../bin/${BINARY_NAME} migrate --action=down
 
 migrate-new:
-	../bin/${BINARY_NAME} migrate new "new migration script"
+	../bin/${BINARY_NAME} migrate --action=new --message="new migration script"
 
 api-docs:
 	export PATH=$(go env GOPATH)/bin:$PATH

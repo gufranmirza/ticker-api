@@ -23,7 +23,8 @@
     "db": {
         "host": "mongodb://localhost:27017",
         "database": "ticker_api",
-        "query_timeout_in_sec": 40
+        "query_timeout_in_sec": 40,
+        "trades_collection": "trades"
     },
 
     "logging": {
