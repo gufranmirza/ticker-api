@@ -19,12 +19,12 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param * body tradesinterface.NewTradeReq{} true "Trade Details"
-// @Param trade_id path string true "Ticker Symbol"
+// @Param ticker_symbol path string true "Ticker Symbol"
 // @Success 200 {object} tradesinterface.NewTradeRes{}
 // @Failure 400 {object} errorinterface.ErrorResponse{}
 // @Failure 404 {object} errorinterface.ErrorResponse{}
 // @Failure 500 {object} errorinterface.ErrorResponse{}
-// @Router /trades/buy/{trade_id} [POST]
+// @Router /trades/buy/{ticker_symbol} [POST]
 func (t *trades) Create(w http.ResponseWriter, r *http.Request) {
 	txID := r.Header["transaction_id"][0]
 	tickerSymbol := strings.ToUpper(chi.URLParam(r, "ticker_symbol"))

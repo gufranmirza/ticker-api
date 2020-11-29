@@ -128,7 +128,7 @@ paths:
       summary: Get health of the service
       tags:
       - health
-  /trades/buy/{trade_id}:
+  /trades/buy/{ticker_symbol}:
     post:
       consumes:
       - application/json
@@ -142,7 +142,7 @@ paths:
           $ref: '#/definitions/tradesinterface.NewTradeReq'
       - description: Ticker Symbol
         in: path
-        name: trade_id
+        name: ticker_symbol
         required: true
         type: string
       produces:

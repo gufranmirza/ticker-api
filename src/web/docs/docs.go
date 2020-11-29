@@ -69,7 +69,7 @@ var doc = `{
                 }
             }
         },
-        "/trades/buy/{trade_id}": {
+        "/trades/buy/{ticker_symbol}": {
             "post": {
                 "description": "It creates new trade details with the given ticker symbol",
                 "consumes": [
@@ -95,7 +95,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "Ticker Symbol",
-                        "name": "trade_id",
+                        "name": "ticker_symbol",
                         "in": "path",
                         "required": true
                     }
