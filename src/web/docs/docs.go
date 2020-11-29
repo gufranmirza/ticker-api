@@ -68,6 +68,65 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/trades/buy/{trade_id}": {
+            "post": {
+                "description": "It creates new trade details with the given ticker symbol",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trades"
+                ],
+                "summary": "Create new trade",
+                "parameters": [
+                    {
+                        "description": "Trade Details",
+                        "name": "*",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.NewTradeReq"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Ticker Symbol",
+                        "name": "trade_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.NewTradeRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -166,6 +225,46 @@ var doc = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "tradesinterface.NewTradeReq": {
+            "type": "object",
+            "properties": {
+                "average_price": {
+                    "type": "number"
+                },
+                "shares": {
+                    "type": "integer"
+                }
+            }
+        },
+        "tradesinterface.NewTradeRes": {
+            "type": "object",
+            "properties": {
+                "average_price": {
+                    "type": "number"
+                },
+                "created_timestamp_utc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "shares": {
+                    "type": "integer"
+                },
+                "ticker_symbol": {
+                    "type": "string"
+                },
+                "updated_timestamp_utc": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
                 }
             }
         }

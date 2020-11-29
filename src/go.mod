@@ -8,6 +8,7 @@ require (
 	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/render v1.0.1
 	github.com/go-delve/delve v1.5.0
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/golang/mock v1.3.1
 	github.com/google/uuid v1.1.2
 	github.com/sirupsen/logrus v1.7.0

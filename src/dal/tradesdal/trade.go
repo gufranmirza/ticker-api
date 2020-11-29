@@ -25,7 +25,7 @@ func NewTradesDal() TradesDal {
 
 // Create creates a new trade details.
 func (r *trade) Create(txID string, job *dbmodels.Trades) (*dbmodels.Trades, error) {
-	rc := r.db.Database().Collection(viper.GetString("db.trades"))
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
 	ctx, cancel := context.WithTimeout(
 		context.Background(),
 		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
@@ -42,7 +42,7 @@ func (r *trade) Create(txID string, job *dbmodels.Trades) (*dbmodels.Trades, err
 }
 
 func (r *trade) Update(job *dbmodels.Trades) error {
-	rc := r.db.Database().Collection(viper.GetString("db.trades"))
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
 	ctx, cancel := context.WithTimeout(
 		context.Background(),
 		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
@@ -57,7 +57,7 @@ func (r *trade) Update(job *dbmodels.Trades) error {
 }
 
 func (r *trade) GetByID(id primitive.ObjectID) (*dbmodels.Trades, error) {
-	rc := r.db.Database().Collection(viper.GetString("db.trades"))
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
 	ctx, cancel := context.WithTimeout(
 		context.Background(),
 		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
@@ -73,7 +73,7 @@ func (r *trade) GetByID(id primitive.ObjectID) (*dbmodels.Trades, error) {
 }
 
 func (r *trade) GetByTicker(symbol string) (*dbmodels.Trades, error) {
-	rc := r.db.Database().Collection(viper.GetString("db.trades"))
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
 	ctx, cancel := context.WithTimeout(
 		context.Background(),
 		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
