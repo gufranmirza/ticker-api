@@ -7,7 +7,6 @@ import (
 	"github.com/spf13/viper"
 	migrate "github.com/xakep666/mongo-migrate"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -18,7 +17,6 @@ func init() {
 			Keys: bson.M{
 				"TickerSymbol": 1,
 			},
-			Options: options.Index().SetUnique(true),
 		},
 		{
 			Keys: bson.M{"UserID": 1},
