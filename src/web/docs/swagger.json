@@ -55,6 +55,54 @@
             }
         },
         "/trades/buy/{ticker_symbol}": {
+            "get": {
+                "description": "It returns the trade details for the given ticker symbol",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trades"
+                ],
+                "summary": "Get trade details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Ticker Symbol",
+                        "name": "ticker_symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.NewTradeRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "It creates new trade details with the given ticker symbol",
                 "consumes": [

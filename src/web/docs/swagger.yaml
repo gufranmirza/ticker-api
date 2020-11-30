@@ -129,6 +129,38 @@ paths:
       tags:
       - health
   /trades/buy/{ticker_symbol}:
+    get:
+      consumes:
+      - application/json
+      description: It returns the trade details for the given ticker symbol
+      parameters:
+      - description: Ticker Symbol
+        in: path
+        name: ticker_symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tradesinterface.NewTradeRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+      summary: Get trade details
+      tags:
+      - Trades
     post:
       consumes:
       - application/json
