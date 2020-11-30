@@ -11,4 +11,5 @@ type TradesDal interface {
 	Update(job *dbmodels.Trades) error
 	GetByID(id primitive.ObjectID) (*dbmodels.Trades, error)
 	GetByTicker(symbol string) (*dbmodels.Trades, error)
+	DeleteByTicker(symbol string) error
 }

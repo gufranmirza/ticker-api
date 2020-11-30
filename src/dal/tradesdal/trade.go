@@ -87,3 +87,18 @@ func (r *trade) GetByTicker(symbol string) (*dbmodels.Trades, error) {
 
 	return &rec, nil
 }
+
+func (r *trade) DeleteByTicker(symbol string) error {
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
+	)
+	defer cancel()
+
+	if _, err := rc.DeleteOne(ctx, bson.M{"ticker_symbol": symbol}); err != nil {
+		return err
+	}
+
+	return nil
+}
