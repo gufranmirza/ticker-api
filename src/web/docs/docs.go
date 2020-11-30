@@ -118,6 +118,63 @@ var doc = `{
                     }
                 }
             },
+            "put": {
+                "description": "It allows to update trade details with given ticker symbol",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trades"
+                ],
+                "summary": "Buy more trade",
+                "parameters": [
+                    {
+                        "description": "Trade Details",
+                        "name": "*",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.NewTradeReq"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Ticker Symbol",
+                        "name": "ticker_symbol",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.NewTradeRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "It creates new trade details with the given ticker symbol",
                 "consumes": [

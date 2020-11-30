@@ -228,4 +228,42 @@ paths:
       summary: Create new trade
       tags:
       - Trades
+    put:
+      consumes:
+      - application/json
+      description: It allows to update trade details with given ticker symbol
+      parameters:
+      - description: Trade Details
+        in: body
+        name: '*'
+        required: true
+        schema:
+          $ref: '#/definitions/tradesinterface.NewTradeReq'
+      - description: Ticker Symbol
+        in: path
+        name: ticker_symbol
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tradesinterface.NewTradeRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+      summary: Buy more trade
+      tags:
+      - Trades
 swagger: "2.0"
