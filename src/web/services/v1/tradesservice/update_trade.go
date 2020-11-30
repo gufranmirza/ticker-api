@@ -1,11 +1,11 @@
 package tradesservice
 
 import (
+	"errors"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/gufranmirza/ticker-api/database/dbmodels"
 	"github.com/gufranmirza/ticker-api/web/interfaces/v1/tradesinterface"
 
 	"github.com/go-chi/chi"
@@ -13,8 +13,8 @@ import (
 	"github.com/gufranmirza/ticker-api/web/renderers"
 )
 
-// @Summary Create new trade
-// @Description It creates new trade details with the given ticker symbol
+// @Summary Update a trade
+// @Description It allows to update trade details with given ticker symbol
 // @Tags Trades
 // @Accept  json
 // @Produce  json
@@ -24,8 +24,8 @@ import (
 // @Failure 400 {object} errorinterface.ErrorResponse{}
 // @Failure 404 {object} errorinterface.ErrorResponse{}
 // @Failure 500 {object} errorinterface.ErrorResponse{}
-// @Router /trades/buy/{ticker_symbol} [POST]
-func (t *trades) Create(w http.ResponseWriter, r *http.Request) {
+// @Router /trades/{ticker_symbol} [PUT]
+func (t *trades) Update(w http.ResponseWriter, r *http.Request) {
 	txID := r.Header["transaction_id"][0]
 	tickerSymbol := strings.ToUpper(chi.URLParam(r, "ticker_symbol"))
 
@@ -37,19 +37,16 @@ func (t *trades) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, _ := t.tradesdal.GetByTicker(tickerSymbol)
-	if res != nil {
-		render.Render(w, r, renderers.ErrorBadRequest(ErrTradeAlreadyExists))
+	if res == nil {
+		render.Render(w, r, renderers.ErrorNotFound(errors.New("Nothing found for the given ticker symbol, first create trade before updating")))
 		return
 	}
 
-	trade := &dbmodels.Trades{}
-	trade.CreatedTimestampUTC = time.Now().UTC()
-	trade.CreatedTimestampUTC = time.Now().UTC()
-	trade.TickerSymbol = tickerSymbol
-	trade.AveragePrice = tradeData.AveragePrice
-	trade.Shares = tradeData.Shares
+	res.AveragePrice = ((float64(res.Shares) * res.AveragePrice) + (float64(tradeData.Shares) * tradeData.AveragePrice)) / (float64(res.Shares) + float64(tradeData.Shares))
+	res.Shares += tradeData.Shares
+	res.UpdatedTimestampUTC = time.Now().UTC()
 
-	resp, err := t.tradesdal.Create(txID, trade)
+	err := t.tradesdal.Update(res)
 	if err != nil {
 		t.logger.Error(txID, FailedToCreateTrade).Error(err)
 		render.Render(w, r, renderers.ErrorInternalServerError(err))
@@ -57,7 +54,7 @@ func (t *trades) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.Respond(w, r, &tradesinterface.NewTradeRes{
-		Trades: resp,
+		Trades: res,
 	})
 	return
 }

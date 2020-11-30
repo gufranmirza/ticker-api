@@ -69,7 +69,51 @@ var doc = `{
                 }
             }
         },
-        "/trades/buy/{ticker_symbol}": {
+        "/trades/portfolio": {
+            "get": {
+                "description": "It returns trades portfolio for a given user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trades"
+                ],
+                "summary": "Get Portfolio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dbmodels.Trades"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/trades/{ticker_symbol}": {
             "get": {
                 "description": "It returns the trade details for the given ticker symbol",
                 "consumes": [
@@ -129,7 +173,7 @@ var doc = `{
                 "tags": [
                     "Trades"
                 ],
-                "summary": "Buy more trade",
+                "summary": "Update a trade",
                 "parameters": [
                     {
                         "description": "Trade Details",
@@ -278,6 +322,35 @@ var doc = `{
         }
     },
     "definitions": {
+        "dbmodels.Trades": {
+            "type": "object",
+            "properties": {
+                "average_price": {
+                    "type": "number"
+                },
+                "created_timestamp_utc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "shares": {
+                    "type": "integer"
+                },
+                "ticker_symbol": {
+                    "type": "string"
+                },
+                "updated_timestamp_utc": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
         "errorinterface.ErrorResponse": {
             "type": "object",
             "properties": {

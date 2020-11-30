@@ -1,5 +1,24 @@
 basePath: /ticker-api/v1
 definitions:
+  dbmodels.Trades:
+    properties:
+      average_price:
+        type: number
+      created_timestamp_utc:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      shares:
+        type: integer
+      ticker_symbol:
+        type: string
+      updated_timestamp_utc:
+        type: string
+      user_id:
+        type: string
+    type: object
   errorinterface.ErrorResponse:
     properties:
       code:
@@ -128,7 +147,7 @@ paths:
       summary: Get health of the service
       tags:
       - health
-  /trades/buy/{ticker_symbol}:
+  /trades/{ticker_symbol}:
     delete:
       consumes:
       - application/json
@@ -263,7 +282,36 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errorinterface.ErrorResponse'
-      summary: Buy more trade
+      summary: Update a trade
+      tags:
+      - Trades
+  /trades/portfolio:
+    get:
+      consumes:
+      - application/json
+      description: It returns trades portfolio for a given user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dbmodels.Trades'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+      summary: Get Portfolio
       tags:
       - Trades
 swagger: "2.0"

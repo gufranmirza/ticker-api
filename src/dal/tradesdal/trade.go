@@ -102,3 +102,24 @@ func (r *trade) DeleteByTicker(symbol string) error {
 
 	return nil
 }
+
+func (r *trade) GetTradesByUserID(userID primitive.ObjectID) ([]dbmodels.Trades, error) {
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
+	)
+	defer cancel()
+
+	filterCursor, err := rc.Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return []dbmodels.Trades{}, fmt.Errorf("Failed to search trades with error %v", err)
+	}
+
+	var trades []dbmodels.Trades
+	if err = filterCursor.All(ctx, &trades); err != nil {
+		return []dbmodels.Trades{}, fmt.Errorf("Failed to search trades with error %v", err)
+	}
+
+	return trades, nil
+}
