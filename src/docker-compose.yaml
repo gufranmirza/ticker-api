@@ -1,0 +1,19 @@
+version: '2'
+services:
+  mongo:
+    image: 'mongo:latest'
+    container_name: 'mongodb-database'
+    ports:
+      - '27017:27017'
+    
+  api:
+    container_name: 'ticker-api'
+    build: './'
+    ports:
+        - '8001:8001'
+    volumes:
+        - './:/go/src/app'
+    links:
+        - mongo
+    depends_on:
+        - mongo
