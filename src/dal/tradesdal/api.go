@@ -13,4 +13,5 @@ type TradesDal interface {
 	GetByTicker(symbol string) (*dbmodels.Trades, error)
 	DeleteByTicker(symbol string) error
 	GetTradesByUserID(userID primitive.ObjectID) ([]dbmodels.Trades, error)
+	GetByTickerAndUser(symbol string, userID primitive.ObjectID) (*dbmodels.Trades, error)
 }

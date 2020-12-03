@@ -123,3 +123,19 @@ func (r *trade) GetTradesByUserID(userID primitive.ObjectID) ([]dbmodels.Trades,
 
 	return trades, nil
 }
+
+func (r *trade) GetByTickerAndUser(symbol string, userID primitive.ObjectID) (*dbmodels.Trades, error) {
+	rc := r.db.Database().Collection(viper.GetString("db.trades_collection"))
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		time.Duration(viper.GetInt("db.query_timeout_in_sec"))*time.Second,
+	)
+	defer cancel()
+
+	var rec dbmodels.Trades
+	if err := rc.FindOne(ctx, bson.M{"ticker_symbol": symbol, "user_id": userID}).Decode(&rec); err != nil {
+		return nil, err
+	}
+
+	return &rec, nil
+}
