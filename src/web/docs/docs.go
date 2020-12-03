@@ -113,6 +113,47 @@ var doc = `{
                 }
             }
         },
+        "/trades/portfolio/returns": {
+            "get": {
+                "description": "It returns total portfolio returns for a given user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trades"
+                ],
+                "summary": "Get Portfolio returns",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tradesinterface.ReturnsRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errorinterface.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/trades/{ticker_symbol}": {
             "get": {
                 "description": "It returns the trade details for the given ticker symbol",
@@ -545,6 +586,31 @@ var doc = `{
                 },
                 "user_id": {
                     "type": "string"
+                }
+            }
+        },
+        "tradesinterface.ReturnsRes": {
+            "type": "object",
+            "properties": {
+                "total_return_amount": {
+                    "type": "number"
+                },
+                "trades": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tradesinterface.TradesReturn"
+                    }
+                }
+            }
+        },
+        "tradesinterface.TradesReturn": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "return": {
+                    "type": "number"
                 }
             }
         }

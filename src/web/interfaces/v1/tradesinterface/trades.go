@@ -18,6 +18,18 @@ type NewTradeRes struct {
 	*dbmodels.Trades
 }
 
+// ReturnsRes holds the portfolio returns
+type ReturnsRes struct {
+	Trades            []TradesReturn `json:"trades"`
+	TotalReturnAmount float64        `json:"total_return_amount"`
+}
+
+// TradesReturn holds returns specific to a trade
+type TradesReturn struct {
+	Name   string  `json:"name"`
+	Return float64 `json:"return"`
+}
+
 // ============== Validation ============== //
 
 // Bind valide the request interface with rules given

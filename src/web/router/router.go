@@ -68,6 +68,7 @@ func (router *router) Router(enableCORS bool) *chi.Mux {
 	r.Put(v1Prefix+"/trades"+"/{ticker_symbol}", router.trades.Update)
 	r.Post(v1Prefix+"/trades"+"/{ticker_symbol}/sell", router.trades.Sell)
 	r.Get(v1Prefix+"/trades"+"/portfolio", router.trades.Portfolio)
+	r.Get(v1Prefix+"/trades"+"/portfolio/returns", router.trades.PortfolioReturns)
 
 	return r
 }

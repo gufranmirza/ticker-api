@@ -110,6 +110,22 @@ definitions:
       user_id:
         type: string
     type: object
+  tradesinterface.ReturnsRes:
+    properties:
+      total_return_amount:
+        type: number
+      trades:
+        items:
+          $ref: '#/definitions/tradesinterface.TradesReturn'
+        type: array
+    type: object
+  tradesinterface.TradesReturn:
+    properties:
+      name:
+        type: string
+      return:
+        type: number
+    type: object
 host: localhost:8001
 info:
   contact: {}
@@ -351,6 +367,33 @@ paths:
           schema:
             $ref: '#/definitions/errorinterface.ErrorResponse'
       summary: Get Portfolio
+      tags:
+      - Trades
+  /trades/portfolio/returns:
+    get:
+      consumes:
+      - application/json
+      description: It returns total portfolio returns for a given user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tradesinterface.ReturnsRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errorinterface.ErrorResponse'
+      summary: Get Portfolio returns
       tags:
       - Trades
 swagger: "2.0"
