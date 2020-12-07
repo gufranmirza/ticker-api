@@ -75,13 +75,10 @@ func GetPrice(ticker string) (float64, error) {
 	}
 
 	var data Response
-
 	err = json.Unmarshal(body, &data)
 	if err != nil {
 		return 0, fmt.Errorf("Failed to unmarshal with error %v", err)
 	}
-
-	fmt.Println(data.Data[0].Price)
 
 	return data.Data[0].Price, nil
 }
